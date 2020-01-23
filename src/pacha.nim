@@ -1,5 +1,9 @@
-echo "What's your name:? "
+from os import param_count, command_line_params
 
-let name: string = readLine(stdin)
+from watch/watch import parse_cli_params
 
-echo "Hello ", name, "!"
+proc main() =
+
+  parse_cli_params(command_line_params())
+
+main()

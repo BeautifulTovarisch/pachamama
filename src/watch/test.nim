@@ -1,5 +1,16 @@
 import std/unittest
 
-suite "Example test suite":
-  test "Example test":
-    check(1 != 2)
+from watch import parse_cli_params
+
+
+suite "Watcher Tests":
+  test "Test Parsing CLI args":
+    let cmds = @["-w",
+                 "**/*.txt",
+                 "-x /bin/true",
+                 "-w",
+                 "**/*.css",
+                 "-x", "minify css",
+                 "-h",
+                 "--help"]
+    check(1 == 1)

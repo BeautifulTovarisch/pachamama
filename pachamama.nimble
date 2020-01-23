@@ -16,7 +16,7 @@ task test, "Run tests":
       exec "nim c -r -o:/tmp $#" % file
 
 task watch, "Watch files for changes":
-  exec "find -name *.nim | entr -c --hint:off nimble test"
+  exec "find -name *.nim | entr -r /bin/sh -c 'nimble --hint:off test && nimble run pacha'"
 
 # Dependencies
 
