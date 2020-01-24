@@ -1,0 +1,12 @@
+---
+# Development compose file
+
+version: '3.7'
+services:
+  dev:
+    tty: true
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/app/src/pachamama/src
