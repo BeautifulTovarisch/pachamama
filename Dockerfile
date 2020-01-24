@@ -1,22 +1,25 @@
-FROM nimlang/nim:1.0.4 as development
+FROM rust:1.40.0 as development
 
-ENV environment=dev
-
-RUN apt-get update && apt-get install curl build-essential -y -qq
-
-# Install entr
-RUN curl -L http://eradman.com/entrproject/code/entr-4.3.tar.gz -o /tmp/entr-4.3 \
-    && tar xvf /tmp/entr-4.3 -C /tmp \
-    && cd /tmp/entr-4.3 \
-    && ./configure; make \
-    && ln -s /tmp/entr-4.3/entr /usr/local/bin
+ENV environment=development
 
 WORKDIR /app/src/pachamama
 
-COPY pachamama.nimble /app/src/pachamama
-COPY ./src ./src
+COPY src ./src
+COPY Cargo.toml Cargo.lock ./
 
-RUN nimble test
-RUN nimble build
+RUN cargo install cargo-watch
 
-CMD [ "nimble", "watch" ]
+RUN cargo build
+
+CMD [ "cargo", "watch", "-c", "-x", "check", "-x", "test" ]
+
+FROM rust:1.40.0 as build
+
+ENV environment=production
+
+COPY src ./src
+
+COPY Cargo.toml Cargo.lock ./
+
+RUN cargo test
+RUN cargo build --release
