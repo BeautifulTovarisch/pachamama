@@ -11,7 +11,7 @@ RUN cargo install cargo-watch
 
 RUN cargo build
 
-CMD [ "cargo", "watch", "-c", "-x", "check", "-x", "test" ]
+CMD [ "cargo", "watch", "-c", "-x", "check", "-x", "test -- --nocapture" ]
 
 FROM rust:1.40.0 as build
 

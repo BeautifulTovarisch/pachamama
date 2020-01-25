@@ -23,11 +23,27 @@ pub fn parse_args<I>(args: I) -> Vec<Param>
 {
     let mut arguments = args.peekable();
 
-    // if let Some(val) = arguments.peek() {
-    //     panic!("{}", val);
-    // }
+    let mut parsed = Vec::new();
 
-    return vec![Param::Glob("test".to_string())]
+    // While the iterator has elements remaining
+    while let Some(arg) = arguments.next() {
+
+        // As soon as we see the user ask for help we leave
+        if arg.as_str() == "-h" || arg.as_str() == "--help" {
+            parsed.push(Param::Help);
+            return parsed;
+        }
+
+        // If the next element exists
+        if let Some(val) = arguments.next() {
+            match arg.as_str() {
+                "-w" => parsed.push(Param::Glob(val)),
+                "-x" => parsed.push(Param::Command(val)),
+                _ => ()
+            }
+        }
+    }
+    parsed
 }
 
 #[cfg(test)]
