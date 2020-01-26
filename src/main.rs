@@ -1,9 +1,10 @@
 use std::env::{ args };
 
+mod parser;
 mod watcher;
 
-use watcher::{ parse_args };
+use watcher::{ watch };
 
 fn main() {
-    parse_args(args());
+    watch(args());
 }

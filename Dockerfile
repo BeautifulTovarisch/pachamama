@@ -23,3 +23,4 @@ COPY Cargo.toml Cargo.lock ./
 
 RUN cargo test
 RUN cargo build --release
+RUN cargo doc --no-deps
