@@ -1,11 +1,12 @@
 ---
+# Development compose file
 
 version: '3.7'
 services:
-  nim-dev:
+  dev:
     tty: true
     build:
       context: .
-      target: 'development'
+      target: development
     volumes:
       - ./src:/app/src/pachamama/src
